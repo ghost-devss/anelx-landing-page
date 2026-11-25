@@ -3,7 +3,7 @@
 Landing page do **AnelX**, um anel inteligente que acompanha os batimentos cardíacos de dia e de noite.
 Página única, bilíngue (português e inglês), feita só com **HTML, CSS e JavaScript puro**: não tem framework, etapa de build nem `npm install`.
 
-> *EN — Single-page, bilingual (PT-BR / EN) landing page for AnelX, a heart-rate smart ring. Plain HTML, CSS and JavaScript: no framework, no build step. Docs are in Portuguese; the site itself switches languages in the browser.*
+> *EN — Single-page, bilingual (PT-BR / EN) landing page for AnelX, a heart-rate smart ring. Plain HTML, CSS and JavaScript: no framework, no build step. Inspired by the Oura Ring website (ouraring.com); independent project, not affiliated with Oura Health Oy. Docs are in Portuguese; the site itself switches languages in the browser.*
 
 ---
 
@@ -81,7 +81,8 @@ Versão de lançamento, com alguns **conteúdos provisórios**. Todos estão mar
 - **Fraunces** (títulos) e **Geist** (texto): SIL Open Font License 1.1. As licenças estão em [`assets/fonts/`](assets/fonts/).
 - **GSAP** e **ScrollTrigger**: GreenSock, [licença padrão "no charge"](https://gsap.com/standard-license).
 - **Imagens:** criadas para o AnelX a partir dos prompts em [`imagens.md`](imagens.md).
-- **Referência:** a estrutura e o clima foram inspirados em sites de wearables premium. O AnelX não tem relação com nenhuma outra marca, e textos, nomes, fotos e layout são próprios.
+- **Inspiração:** esta landing page foi inspirada no **Oura Ring** e no site [ouraring.com](https://ouraring.com/), de onde vêm a estrutura das seções, o ritmo e o clima visual (creme quente, seções escuras, um único acento azul, títulos em serifa). Textos, nomes, imagens, telas do app e código são próprios do AnelX. Não há print, foto, logo ou texto da Oura neste repositório.
+- **Sem afiliação:** o AnelX é um projeto independente, sem ligação com a Oura Health Oy. *Oura* e *Oura Ring* são marcas da Oura Health Oy, citadas aqui só para dar o crédito da inspiração.
 - **Código:** ainda sem licença de uso definida. Até que exista uma, valem todos os direitos reservados.
 
 > O AnelX não substitui acompanhamento médico.
