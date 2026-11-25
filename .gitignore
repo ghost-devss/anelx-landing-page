@@ -1,0 +1,32 @@
+# Sistema (Windows / macOS)
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Temporários do OneDrive e do Office
+~$*
+*.tmp
+
+# Editores
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# Claude Code: configurações locais desta máquina
+.claude/settings.local.json
+
+# CodeGraph: índice local, recriado em cada máquina
+.codegraph/
+
+# Segredos
+.env
+.env.*
+
+# Logs
+*.log
+
+# Dependências (o projeto não usa npm; evita subir por acidente)
+node_modules/
