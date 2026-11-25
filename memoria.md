@@ -4,6 +4,13 @@ Diário de decisões e aprendizados. Entrada nova no topo. Decisão de design vi
 
 ---
 
+## 2026-11-25 — Repositório pronto para ser público
+
+- Repositório renomeado: `Site-Oura-Ring` → **`ghost-devss/anelx-landing-page`**.
+- **E-mail privado do GitHub** configurado neste projeto (`git config user.email`, noreply da conta `ghost-devss`). **Histórico reescrito** (`git filter-branch`) para tirar o e-mail pessoal de todos os commits, com push forçado autorizado. Datas e mensagens foram mantidas. Cópia do histórico antigo na branch local `backup-antes-email`, que nunca foi enviada.
+- README dá o crédito: inspirado no Oura Ring / ouraring.com, sem afiliação com a Oura Health Oy. A landing page em si não cita a Oura.
+- Print da Oura (`refererencia - site/`) fora do repositório e no `.gitignore`. Ainda existe nos commits antigos (opção escolhida).
+
 ## 2026-11-25 — Página única de verdade + depoimentos ilustrativos
 
 - **Saídas falsas removidas:** "Ler artigo ↗", os 3 cards da Ciência (links ↗ para artigos inexistentes) e "Fale com a gente ↗" em Empresas. A Ciência agora traz o conteúdo na própria página (um parágrafo por card, sem seta). Empresas diz "Em breve".
