@@ -6,6 +6,8 @@ Plano de construção da landing page, feito antes de escrever código. Segue o 
 - Tudo que está marcado **[medido]** foi conferido de verdade: pixels das imagens, cores das bordas, contraste calculado, linhas contadas no Chrome com as fontes reais.
 - Data: 2026-11-24.
 
+> **Estado em 2026-11-24:** decisões D1–D11 aprovadas e aplicadas no `specs/design.md`. Etapas 1 a 8 concluídas: o site está em `index.html`, `css/`, `js/` e `assets/`. A D11 foi resolvida em CSS (recorte do card), sem regerar a imagem. Falta o conteúdo real da §8; regerar o hero em 2400px ou mais é opcional.
+
 ---
 
 ## 0. Resumo

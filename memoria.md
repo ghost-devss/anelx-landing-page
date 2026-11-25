@@ -4,6 +4,25 @@ Diário de decisões e aprendizados. Entrada nova no topo. Decisão de design vi
 
 ---
 
+## 2026-11-24 — Site construído
+
+- Decisões D1–D11 do plano aprovadas ("corrija o que precisa e CRIE") e levadas ao `specs/design.md`.
+- Criados `index.html`, `css/styles.css`, `js/main.js` e `js/i18n.js`. Conferido em 360, 390, 768, 1024 e 1440px, em PT e EN.
+- **Conteúdo sem dado real** (tudo marcado com `data-pendente` no HTML):
+  - estatística: fato fisiológico "100 mil batidas por dia", com nota (adulto, 60–100 bpm em repouso). Trocar por dado real de usuários quando houver.
+  - depoimentos: texto que diz explicitamente que o espaço é reservado para cliente real.
+  - aviso: lançamento, sem oferta. Carrinho oculto. CTA leva a `#app`. "Empresas" leva a um bloco no footer.
+  - newsletter: avisa que a inscrição ainda não está ativa (não finge que salvou).
+- **D11 resolvido em CSS:** card "Atividade" com zoom de 1,2 ancorado embaixo; o rosto sai do quadro. Não precisa regerar.
+- Alt do hero e do manifesto ajustados ao que as fotos mostram de fato.
+- Commit + push a cada alteração importante (pedido do usuário).
+
+### Aprendizados
+- Abrir o `index.html` direto do disco (`file://`) faz o Chrome bloquear as fontes (CORS) e a página aparece em Georgia/Arial. Num servidor (GitHub Pages, Live Server do VS Code) carrega normal.
+- Chrome sem janela não reduz a janela abaixo de ~500px: capturas de celular são feitas dentro de um iframe.
+- Chrome sem janela, dentro de iframe e com tempo virtual, não dispara eventos de rolagem: testar os handlers disparando o evento à mão.
+- Quando um componente define `display`, o atributo `hidden` para de funcionar; por isso há `[hidden] { display: none !important }` no CSS.
+
 ## 2026-11-24 — Plano do site e revisão das imagens
 
 - Criado `specs/plano-do-site.md`: revisão das 16 imagens, tamanhos, tipografia, redlines, comportamento dos textos (medido no Chrome com as fontes reais), rascunho PT/EN e ordem de execução.

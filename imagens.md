@@ -69,6 +69,8 @@ Real editorial photograph for a premium wellness brand. Product: a minimalist sm
 
 Os IDs seguem a ordem em que foram criados, não a ordem da página.
 
+> **Tamanhos reais (2026-11-24):** as imagens geradas vieram menores que esta tabela em 8 casos e em JPEG/PNG, não WebP. Os originais ficam em `meus produtos/`. As versões publicadas estão em `assets/img/`, em WebP, com a largura no nome (ex.: `card-coracao-640.webp`). Tamanhos e larguras exportadas: `specs/plano-do-site.md` §3.
+
 Sem imagem:
 - **Barra de aviso (1) e nav (2):** faixas de 40–70px de altura, não comportam foto. O logo vai em SVG.
 - **Cards de imprensa (9):** os 3 cards menores ficam só com texto, como na referência.
@@ -110,8 +112,8 @@ No IMG-05 e IMG-06, a foto anexada não é a que inspirou a cena (`azul-homem` �
 - **Seção:** 3. Hero. Fica abaixo do título display + subtítulo + CTA azul, centralizados.
 - **Encaixe:** os 45% de cima da imagem ficam vazios (só creme) pro texto. Anéis no terço de baixo, centralizados. Bordas da imagem terminam em creme liso `#F4EEE4` pra fundir com o fundo da página.
 - **Arquivo:** `assets/img/hero-desktop.webp`
-- **alt PT:** "Dois anéis AnelX, prata e preto, sobre uma faixa de tecido creme."
-- **alt EN:** "Two AnelX rings, silver and black, resting on a flowing cream fabric ribbon."
+- **alt PT:** "Dois anéis AnelX, prata e preto, apoiados sobre um tecido acetinado."
+- **alt EN:** "Two AnelX rings, silver and black, resting on satin fabric."
 
 ```
 [PROMPT BASE]
@@ -249,8 +251,8 @@ Finish: brushed silver titanium. Scene: studio still life, a single ring standin
 - **Seção:** 4. Manifesto. Fica abaixo da frase grande e dos dois botões, na largura do container, cantos de 20px.
 - **Encaixe:** sem texto por cima. Terço esquerdo calmo (parede e chão iluminados); pessoa e anel no terço direito.
 - **Arquivo:** `assets/img/manifesto.webp`
-- **alt PT:** "Pessoa sentada perto da janela, de olhos fechados, com anel AnelX prata."
-- **alt EN:** "Person sitting by a window with eyes closed, wearing a silver AnelX ring."
+- **alt PT:** "Pessoa sentada no chão em meditação, sob a luz da janela, com anel AnelX prata."
+- **alt EN:** "Person meditating on the floor in window light, wearing a silver AnelX ring."
 
 ```
 [PROMPT BASE]
