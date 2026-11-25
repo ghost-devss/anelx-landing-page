@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="meta.titulo">AnelX — Entenda seu coração, batida a batida</title>
+  <meta name="description" content="AnelX é um anel inteligente que acompanha seus batimentos de dia e de noite e transforma cada batida em informação clara." data-i18n-attr="content:meta.descricao">
+  <meta name="theme-color" content="#F4EEE4">
+
+  <!-- Compartilhamento. Pendente: trocar o caminho da og:image pela URL absoluta do domínio. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AnelX — Entenda seu coração, batida a batida">
+  <meta property="og:description" content="Um anel leve que acompanha seus batimentos de dia e de noite.">
+  <meta property="og:image" content="assets/og/og-anelx.jpg" data-pendente="URL absoluta do domínio">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:locale:alternate" content="en_US">
+
+  <link rel="icon" href="data:,">
+  <link rel="preload" href="assets/fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script>
+    /* Antes de pintar: esconde a página se o idioma salvo for EN (evita piscar em PT) e respeita o aviso fechado. */
+    (function (d) {
+      try {
+        var l = new URLSearchParams(location.search).get('lang') || localStorage.getItem('anelx-lang');
+        if (l === 'en') { d.classList.add('i18n-pendente'); setTimeout(function () { d.classList.remove('i18n-pendente'); }, 1500); }
+        if (localStorage.getItem('anelx-aviso') === '1') d.classList.add('aviso-fechado');
+      } catch (e) {}
+    })(document.documentElement);
+  </script>
+  <script src="js/i18n.js" defer></script>
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <a class="pular" href="#conteudo" data-i18n="pular">Pular para o conteúdo</a>
+
+  <!-- 1. Barra de aviso -->
+  <div class="aviso" id="aviso" data-pendente="trocar por oferta real (frete ou desconto)">
+    <p data-i18n="aviso.texto">Novo: AnelX, o anel que entende seu coração.</p>
+    <button class="aviso__fechar" type="button" aria-label="Fechar aviso" data-i18n-attr="aria-label:aviso.fechar">
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+
+  <!-- 2. Nav fixa -->
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a class="logo" href="#topo" aria-label="AnelX, início" data-i18n-attr="aria-label:nav.inicio">AnelX</a>
+
+      <nav class="nav__principal" aria-label="Principal" data-i18n-attr="aria-label:nav.rotulo">
+        <ul class="nav__links">
+          <li><a href="#app" data-i18n="nav.produto">Produto</a></li>
+          <li><a href="#beneficios" data-i18n="nav.saude">Sua Saúde</a></li>
+          <li><a href="#manifesto" data-i18n="nav.porque">Por que AnelX</a></li>
+          <li><a href="#empresas" data-i18n="nav.empresas">Empresas</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav__acoes">
+        <div class="idioma idioma--nav" role="group" aria-label="Idioma" data-i18n-attr="aria-label:nav.idioma">
+          <button type="button" data-lang="pt" aria-pressed="true" lang="pt-BR">PT</button>
+          <button type="button" data-lang="en" aria-pressed="false" lang="en">EN</button>
+        </div>
+        <a class="nav__carrinho" href="#" hidden aria-label="Carrinho" data-i18n-attr="aria-label:nav.carrinho" data-pendente="link da loja">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M5.5 8h13l-1 12h-11l-1-12ZM9 8V7a3 3 0 0 1 6 0v1" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </a>
+        <button class="nav__menu" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Abrir menu">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path class="icone-menu" d="M4 9h16M4 15h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="menu-mobile" id="menu-mobile" hidden>
+      <ul class="menu-mobile__links">
+        <li><a href="#app" data-i18n="nav.produto">Produto</a></li>
+        <li><a href="#beneficios" data-i18n="nav.saude">Sua Saúde</a></li>
+        <li><a href="#manifesto" data-i18n="nav.porque">Por que AnelX</a></li>
+        <li><a href="#empresas" data-i18n="nav.empresas">Empresas</a></li>
+      </ul>
+      <div class="idioma idioma--menu" role="group" aria-label="Idioma" data-i18n-attr="aria-label:nav.idioma">
+        <button type="button" data-lang="pt" aria-pressed="true" lang="pt-BR">Português</button>
+        <button type="button" data-lang="en" aria-pressed="false" lang="en">English</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <!-- 3. Hero -->
+    <section class="hero" id="topo" aria-labelledby="hero-titulo">
+      <div class="hero__painel">
+        <div class="hero__texto container">
+          <span class="tag" data-i18n="hero.badge">Lançamento</span>
+          <h1 class="display hero__titulo" id="hero-titulo" data-i18n="hero.titulo">Entenda seu coração, batida a batida.</h1>
+          <p class="hero__sub" data-i18n="hero.sub">Um anel leve que acompanha seus batimentos de dia e de noite.</p>
+          <a class="btn btn--primario hero__cta" href="#app" data-i18n="hero.cta" data-pendente="link da loja, quando houver">Conheça o AnelX</a>
+        </div>
+        <picture class="hero__imagem">
+          <source media="(min-width: 768px)" type="image/webp"
+                  srcset="assets/img/hero-desktop-960.webp 960w, assets/img/hero-desktop-1280.webp 1280w, assets/img/hero-desktop-1672.webp 1672w"
+                  sizes="calc(100vw - 32px)" width="1672" height="941">
+          <img src="assets/img/hero-mobile-750.webp"
+               srcset="assets/img/hero-mobile-750.webp 750w, assets/img/hero-mobile-1122.webp 1122w"
+               sizes="calc(100vw - 16px)" width="1122" height="1402" fetchpriority="high" decoding="async"
+               alt="Dois anéis AnelX, prata e preto, apoiados sobre um tecido acetinado." data-i18n-attr="alt:img.hero">
+        </picture>
+      </div>
+    </section>
+
+    <!-- 4. Manifesto -->
+    <section class="secao manifesto" id="manifesto" aria-labelledby="manifesto-titulo">
+      <div class="container centro">
+        <h2 class="display" id="manifesto-titulo" data-i18n="manifesto.titulo">Sua saúde, no seu ritmo.</h2>
+        <p class="sub manifesto__sub" data-i18n="manifesto.sub">O AnelX transforma cada batimento em informação clara, para você cuidar do corpo sem adivinhar.</p>
+        <div class="grupo-botoes manifesto__botoes">
+          <a class="btn btn--secundario" href="#beneficios" data-i18n="manifesto.porque">Por que AnelX</a>
+          <a class="btn btn--secundario" href="#app" data-i18n="manifesto.como">Como funciona</a>
+        </div>
+        <figure class="manifesto__imagem">
+          <img src="assets/img/manifesto-1024.webp"
+               srcset="assets/img/manifesto-1024.webp 1024w, assets/img/manifesto-1584.webp 1584w"
+               sizes="(max-width: 639px) 160vw, (min-width: 1280px) 1200px, calc(100vw - 80px)"
+               width="1584" height="672" loading="lazy" decoding="async"
+               alt="Pessoa sentada no chão em meditação, sob a luz da janela, com anel AnelX prata." data-i18n-attr="alt:img.manifesto">
+        </figure>
+      </div>
+    </section>
+
+    <!-- 5. Carrossel de benefícios -->
+    <section class="beneficios" id="beneficios" aria-labelledby="beneficios-titulo">
+      <h2 class="sr-only" id="beneficios-titulo" data-i18n="benef.titulo">O que o AnelX acompanha</h2>
+      <div class="carrossel" data-carrossel>
+        <ul class="carrossel__trilha" role="list">
+          <li class="card-beneficio">
+            <img src="assets/img/card-coracao-640.webp" srcset="assets/img/card-coracao-640.webp 640w, assets/img/card-coracao-928.webp 928w"
+                 sizes="(min-width: 640px) 380px, 80vw" width="928" height="1152" loading="lazy" decoding="async"
+                 alt="Mão com anel AnelX prata apoiada sobre o peito." data-i18n-attr="alt:img.coracao">
+            <span class="tag tag--foto" data-i18n="benef.coracao.tag">Coração</span>
+            <button class="card-beneficio__mais" type="button" aria-expanded="false" aria-controls="detalhe-coracao" aria-label="Saiba mais: coração" data-i18n-attr="aria-label:benef.coracao.mais">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </button>
+            <h3 class="card-beneficio__titulo" data-i18n="benef.coracao.titulo">Seu coração, em tempo real</h3>
+            <div class="card-beneficio__detalhe" id="detalhe-coracao" hidden>
+              <p data-i18n="benef.coracao.detalhe">O AnelX acompanha sua frequência cardíaca ao longo do dia e da noite e mostra como ela muda com o sono, o treino e a rotina. Você vê o padrão, não só um número.</p>
+            </div>
+          </li>
+          <li class="card-beneficio">
+            <img src="assets/img/card-sono-640.webp" srcset="assets/img/card-sono-640.webp 640w, assets/img/card-sono-928.webp 928w"
+                 sizes="(min-width: 640px) 380px, 80vw" width="928" height="1152" loading="lazy" decoding="async"
+                 alt="Mão com anel AnelX preto descansando sobre lençol creme pela manhã." data-i18n-attr="alt:img.sono">
+            <span class="tag tag--foto" data-i18n="benef.sono.tag">Sono</span>
+            <button class="card-beneficio__mais" type="button" aria-expanded="false" aria-controls="detalhe-sono" aria-label="Saiba mais: sono" data-i18n-attr="aria-label:benef.sono.mais">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </button>
+            <h3 class="card-beneficio__titulo" data-i18n="benef.sono.titulo">Durma melhor e entenda por quê</h3>
+            <div class="card-beneficio__detalhe" id="detalhe-sono" hidden>
+              <p data-i18n="benef.sono.detalhe">Durante a noite, o anel acompanha seus batimentos e seus movimentos. De manhã, o app mostra como foi o seu descanso e o que pode ter atrapalhado.</p>
+            </div>
+          </li>
+          <li class="card-beneficio">
+            <img src="assets/img/card-estresse-640.webp" srcset="assets/img/card-estresse-640.webp 640w, assets/img/card-estresse-928.webp 928w"
+                 sizes="(min-width: 640px) 380px, 80vw" width="928" height="1152" loading="lazy" decoding="async"
+                 alt="Pessoa de costas com a mão no ombro, usando anel AnelX prata, sob céu azul." data-i18n-attr="alt:img.estresse">
+            <span class="tag tag--foto" data-i18n="benef.estresse.tag">Estresse</span>
+            <button class="card-beneficio__mais" type="button" aria-expanded="false" aria-controls="detalhe-estresse" aria-label="Saiba mais: estresse" data-i18n-attr="aria-label:benef.estresse.mais">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </button>
+            <h3 class="card-beneficio__titulo" data-i18n="benef.estresse.titulo">Perceba o estresse antes que ele pese</h3>
+            <div class="card-beneficio__detalhe" id="detalhe-estresse" hidden>
+              <p data-i18n="benef.estresse.detalhe">Quando o corpo fica em alerta, o coração muda de ritmo. O AnelX mostra esses momentos no seu dia, para você perceber o que pesa e saber quando parar.</p>
+            </div>
+          </li>
+          <li class="card-beneficio card-beneficio--atividade">
+            <img src="assets/img/card-atividade-640.webp" srcset="assets/img/card-atividade-640.webp 640w, assets/img/card-atividade-928.webp 928w"
+                 sizes="(min-width: 640px) 380px, 80vw" width="928" height="1152" loading="lazy" decoding="async"
+                 alt="Atleta descansando os braços numa barra depois do treino, com anel AnelX preto." data-i18n-attr="alt:img.atividade">
+            <span class="tag tag--foto" data-i18n="benef.atividade.tag">Atividade</span>
+            <button class="card-beneficio__mais" type="button" aria-expanded="false" aria-controls="detalhe-atividade" aria-label="Saiba mais: atividade" data-i18n-attr="aria-label:benef.atividade.mais">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </button>
+            <h3 class="card-beneficio__titulo" data-i18n="benef.atividade.titulo">Treine no ritmo que seu corpo aguenta</h3>
+            <div class="card-beneficio__detalhe" id="detalhe-atividade" hidden>
+              <p data-i18n="benef.atividade.detalhe">Veja como seu coração responde a cada treino e quanto tempo leva para voltar ao normal. Assim você ajusta a intensidade ao que o corpo aguenta.</p>
+            </div>
+          </li>
+          <li class="card-beneficio">
+            <img src="assets/img/card-recuperacao-640.webp" srcset="assets/img/card-recuperacao-640.webp 640w, assets/img/card-recuperacao-928.webp 928w"
+                 sizes="(min-width: 640px) 380px, 80vw" width="928" height="1152" loading="lazy" decoding="async"
+                 alt="Mãos segurando uma caneca de cerâmica, com anel AnelX prata e suéter areia." data-i18n-attr="alt:img.recuperacao">
+            <span class="tag tag--foto" data-i18n="benef.recuperacao.tag">Recuperação</span>
+            <button class="card-beneficio__mais" type="button" aria-expanded="false" aria-controls="detalhe-recuperacao" aria-label="Saiba mais: recuperação" data-i18n-attr="aria-label:benef.recuperacao.mais">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </button>
+            <h3 class="card-beneficio__titulo" data-i18n="benef.recuperacao.titulo">Saiba quando descansar de verdade</h3>
+            <div class="card-beneficio__detalhe" id="detalhe-recuperacao" hidden>
+              <p data-i18n="benef.recuperacao.detalhe">Com base no seu sono e nos batimentos em repouso, o app mostra quando o corpo está pronto para mais e quando ele pede uma pausa.</p>
+            </div>
+          </li>
+        </ul>
+        <div class="carrossel__controles container">
+          <div class="carrossel__progresso" aria-hidden="true"><span></span></div>
+          <button class="carrossel__seta carrossel__seta--ant" type="button" data-ant aria-label="Anterior" data-i18n-attr="aria-label:carrossel.ant">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M19 12H5m6-6-6 6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="carrossel__seta" type="button" data-prox aria-label="Próximo" data-i18n-attr="aria-label:carrossel.prox">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Prova numérica -->
+    <section class="secao prova" aria-labelledby="prova-titulo">
+      <div class="container centro">
+        <h2 class="display prova__titulo" id="prova-titulo" data-i18n="prova.titulo" data-pendente="trocar por estatística real de usuários, se houver">100 mil batidas por dia<sup>1</sup></h2>
+        <p class="sub prova__sub" data-i18n="prova.sub">É quanto seu coração trabalha, em média. O AnelX acompanha esse ritmo e mostra o que ele diz sobre você.</p>
+        <a class="btn btn--secundario prova__cta" href="#app" data-i18n="prova.cta">Veja o app</a>
+        <figure class="prova__imagem">
+          <img src="assets/img/comunidade-800.webp" srcset="assets/img/comunidade-800.webp 800w, assets/img/comunidade-1264.webp 1264w"
+               sizes="(min-width: 1040px) 960px, calc(100vw - 40px)" width="1264" height="848" loading="lazy" decoding="async"
+               alt="Mãos de três pessoas de idades diferentes, cada uma com um anel AnelX." data-i18n-attr="alt:img.comunidade">
+        </figure>
+        <p class="legenda prova__nota" id="nota-1" data-i18n="prova.nota">¹ Estimativa para um adulto com frequência de repouso entre 60 e 100 batimentos por minuto.</p>
+      </div>
+    </section>
+
+    <!-- 7. App / produto -->
+    <section class="secao app" id="app" aria-labelledby="app-titulo">
+      <div class="container centro">
+        <h2 class="h1" id="app-titulo" data-i18n="app.titulo">Seus dados, em linguagem simples</h2>
+        <p class="sub app__sub" data-i18n="app.sub">O app traduz o que o anel mede em respostas claras: como você dormiu, como seu coração reagiu e quando vale descansar.</p>
+      </div>
+
+      <div class="leque" role="img" aria-label="Cinco telas do app AnelX: estresse, sono, resumo do dia, coração e atividade." data-i18n-attr="aria-label:app.leque">
+        <!-- Tela 1: Estresse -->
+        <div class="leque__slot leque__slot--1" aria-hidden="true">
+          <div class="tela tela--estresse">
+            <div class="tela__barra"><span class="tela__voltar">‹</span><strong data-i18n="app.t1.titulo">Estresse</strong><span></span></div>
+            <p class="tela__aba" data-i18n="app.hoje">Hoje</p>
+            <svg class="tela__grafico tela__grafico--alto" viewBox="0 0 260 150" aria-hidden="true">
+              <path d="M0 37h260M0 112h260" stroke="rgba(244,238,228,.12)" stroke-dasharray="3 5"/>
+              <path d="M0 95 C18 90 26 70 40 74 S62 112 80 104 S104 40 122 46 S146 92 160 86 S182 24 198 30 S226 98 260 84" fill="none" stroke="#F4EEE4" stroke-width="2"/>
+              <circle cx="198" cy="30" r="4" fill="#2B4CF0" stroke="#F4EEE4" stroke-width="1.5"/>
+            </svg>
+            <div class="tela__eixo"><span data-i18n="app.t1.tenso">Tenso</span><span data-i18n="app.t1.calmo">Calmo</span></div>
+            <div class="tela__blocos">
+              <div class="tela__bloco"><small data-i18n="app.t1.tenso">Tenso</small><b>45 min</b></div>
+              <div class="tela__bloco"><small data-i18n="app.t1.calmo">Calmo</small><b>3 h 10</b></div>
+            </div>
+            <p class="tela__texto" data-i18n="app.t1.msg">O pico foi às 15h. Uma pausa curta ajudou seu coração a desacelerar.</p>
+          </div>
+        </div>
+
+        <!-- Tela 2: Sono -->
+        <div class="leque__slot leque__slot--2" aria-hidden="true">
+          <div class="tela tela--sono">
+            <div class="tela__barra"><span class="tela__voltar">‹</span><strong data-i18n="app.t2.titulo">Sono</strong><span></span></div>
+            <p class="tela__aba" data-i18n="app.t2.ontem">Ontem à noite</p>
+            <p class="tela__grande tela__numero">7 h 32</p>
+            <p class="tela__sub" data-i18n="app.t2.tempo">Tempo dormindo</p>
+            <svg class="tela__grafico" viewBox="0 0 260 90" aria-hidden="true">
+              <g fill="#F4EEE4" opacity=".85"><rect x="0" y="4" width="14" height="18" rx="3"/><rect x="92" y="4" width="18" height="18" rx="3"/><rect x="176" y="4" width="22" height="18" rx="3"/><rect x="236" y="4" width="24" height="18" rx="3"/></g>
+              <g fill="#8C9BF5"><rect x="16" y="36" width="30" height="18" rx="3"/><rect x="72" y="36" width="18" height="18" rx="3"/><rect x="112" y="36" width="26" height="18" rx="3"/><rect x="156" y="36" width="18" height="18" rx="3"/><rect x="200" y="36" width="34" height="18" rx="3"/></g>
+              <g fill="#2B4CF0"><rect x="48" y="68" width="22" height="18" rx="3"/><rect x="140" y="68" width="14" height="18" rx="3"/></g>
+            </svg>
+            <ul class="tela__legenda">
+              <li><i style="--c:#2B4CF0"></i><span data-i18n="app.t2.profundo">Profundo</span><b>22%</b></li>
+              <li><i style="--c:#8C9BF5"></i><span data-i18n="app.t2.leve">Leve</span><b>54%</b></li>
+              <li><i style="--c:#F4EEE4"></i><span>REM</span><b>24%</b></li>
+            </ul>
+            <div class="tela__card">
+              <small data-i18n="app.t2.minima">Frequência mínima</small>
+              <b class="tela__numero">52 <span>bpm</span></b>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tela 3: Hoje (central) -->
+        <div class="leque__slot leque__slot--3" aria-hidden="true">
+          <div class="tela tela--hoje">
+            <div class="tela__barra tela__barra--marca"><span class="tela__marca">AnelX</span></div>
+            <ul class="tela__scores">
+              <li><span class="score" style="--v:86"><b>86</b></span><small data-i18n="app.t3.recuperacao">Recuperação</small></li>
+              <li><span class="score" style="--v:84"><b>84</b></span><small data-i18n="app.t2.titulo">Sono</small></li>
+              <li><span class="score" style="--v:72"><b>72</b></span><small data-i18n="app.t3.atividade">Atividade</small></li>
+            </ul>
+            <div class="tela__card tela__card--grande">
+              <small data-i18n="app.t3.agora">Frequência agora</small>
+              <p class="tela__grande tela__numero">68 <span>bpm</span></p>
+              <svg class="tela__grafico" viewBox="0 0 260 70" aria-hidden="true">
+                <path d="M0 46 C16 44 22 30 34 34 S52 56 66 50 S88 18 104 26 S126 52 140 46 S160 30 174 34 S198 50 212 42 S236 22 254 28" fill="none" stroke="#F4EEE4" stroke-width="2"/>
+                <circle cx="254" cy="28" r="4" fill="#2B4CF0" stroke="#F4EEE4" stroke-width="1.5"/>
+              </svg>
+              <span class="tela__chip"><span data-i18n="app.t3.repouso">Repouso</span> <b class="tela__numero">58 bpm</b></span>
+            </div>
+            <p class="tela__titulo" data-i18n="app.t3.msg">Seu coração está calmo hoje.</p>
+            <p class="tela__texto" data-i18n="app.t3.msg2">A frequência em repouso ficou abaixo da média da semana. Bom sinal de recuperação.</p>
+            <div class="tela__abas">
+              <span class="ativa" data-i18n="app.hoje">Hoje</span>
+              <span data-i18n="app.t4.titulo">Coração</span>
+              <span data-i18n="app.t2.titulo">Sono</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tela 4: Coração -->
+        <div class="leque__slot leque__slot--4" aria-hidden="true">
+          <div class="tela tela--coracao">
+            <div class="tela__barra"><span class="tela__voltar">‹</span><strong data-i18n="app.t4.titulo">Coração</strong><span></span></div>
+            <p class="tela__aba" data-i18n="app.t4.repouso">Frequência em repouso</p>
+            <p class="tela__grande tela__numero">58 <span>bpm</span></p>
+            <span class="tela__chip tela__chip--azul" data-i18n="app.t4.abaixo">Abaixo da sua média</span>
+            <div class="tela__barras">
+              <i style="--h:62%"></i><i style="--h:70%"></i><i style="--h:58%"></i><i style="--h:66%"></i><i style="--h:54%"></i><i style="--h:60%"></i><i class="hoje" style="--h:48%"></i>
+            </div>
+            <div class="tela__dias" data-i18n="app.t4.dias"><span>S</span><span>T</span><span>Q</span><span>Q</span><span>S</span><span>S</span><span>D</span></div>
+            <p class="tela__texto" data-i18n="app.t4.msg">Sete dias seguidos de queda leve. Seu sono mais regular está fazendo diferença.</p>
+          </div>
+        </div>
+
+        <!-- Tela 5: Atividade -->
+        <div class="leque__slot leque__slot--5" aria-hidden="true">
+          <div class="tela tela--atividade">
+            <div class="tela__barra"><span class="tela__voltar">‹</span><strong data-i18n="app.t3.atividade">Atividade</strong><span></span></div>
+            <p class="tela__aba" data-i18n="app.hoje">Hoje</p>
+            <div class="tela__progresso" style="--v:78"><div><b class="tela__numero" data-i18n="app.t5.passos">6.240</b><small data-i18n="app.t5.passosrot">passos</small></div></div>
+            <p class="tela__sub tela__centro" data-i18n="app.t5.meta">Meta: 8.000</p>
+            <ul class="tela__zonas">
+              <li><span data-i18n="app.t5.leve">Leve</span><i style="--w:80%"></i><b>42 min</b></li>
+              <li><span data-i18n="app.t5.moderada">Moderada</span><i style="--w:45%"></i><b>24 min</b></li>
+              <li><span data-i18n="app.t5.intensa">Intensa</span><i style="--w:18%"></i><b>9 min</b></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="sensores" id="app-sensores">
+          <figure class="sensores__imagem">
+            <img src="assets/img/sensores-640.webp" srcset="assets/img/sensores-640.webp 640w, assets/img/sensores-1024.webp 1024w"
+                 sizes="(min-width: 1024px) 560px, calc(100vw - 40px)" width="1024" height="1024" loading="lazy" decoding="async"
+                 alt="Interior do anel AnelX em close, com os sensores acesos." data-i18n-attr="alt:img.sensores">
+          </figure>
+          <div class="sensores__texto">
+            <p class="eyebrow" data-i18n="sensores.eyebrow">Por dentro do anel</p>
+            <h3 class="h2" data-i18n="sensores.titulo">Três sensores, leitura contínua</h3>
+            <p class="sensores__p" data-i18n="sensores.texto">Por dentro do anel, três sensores ópticos usam luz para ler o pulso no seu dedo, sem agulha e sem incômodo. O titânio leve deixa o AnelX confortável para usar o dia todo e a noite toda.</p>
+            <dl class="fichas">
+              <div><dt data-i18n="sensores.largura">Largura</dt><dd>7,5 mm</dd></div>
+              <div><dt data-i18n="sensores.material">Material</dt><dd data-i18n="sensores.titanio">Titânio</dd></div>
+              <div><dt data-i18n="sensores.acabamentos">Acabamentos</dt><dd data-i18n="sensores.cores">Prata escovado · Preto fosco</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Depoimentos -->
+    <section class="secao depoimentos" id="depoimentos" aria-labelledby="depo-titulo" data-pendente="3 depoimentos reais, com permissão">
+      <h2 class="sr-only" id="depo-titulo" data-i18n="depo.titulo">Depoimentos</h2>
+      <ul class="depo-lista" role="list" tabindex="0" aria-label="Depoimentos de clientes" data-i18n-attr="aria-label:depo.lista">
+        <li class="depo-card">
+          <img src="assets/img/depo-coracao-560.webp" srcset="assets/img/depo-coracao-560.webp 560w, assets/img/depo-coracao-800.webp 800w"
+               sizes="(min-width: 1200px) 384px, 85vw" width="800" height="597" loading="lazy" decoding="async"
+               alt="Mão com anel AnelX prata apoiada no joelho, num banco de praça." data-i18n-attr="alt:img.depo1">
+          <div class="depo-card__corpo">
+            <span class="tag" data-i18n="benef.coracao.tag">Coração</span>
+            <blockquote class="depo-card__citacao"><p data-i18n="depo.placeholder">Espaço reservado para o depoimento real de um cliente. Até 160 caracteres, com nome e cidade autorizados por escrito.</p></blockquote>
+            <div class="autor"><span class="autor__iniciais" aria-hidden="true">NC</span><p><strong data-i18n="depo.nome">Nome do cliente</strong><span data-i18n="depo.cidade">Cidade, UF</span></p></div>
+          </div>
+        </li>
+        <li class="depo-card">
+          <img src="assets/img/depo-sono-560.webp" srcset="assets/img/depo-sono-560.webp 560w, assets/img/depo-sono-800.webp 800w"
+               sizes="(min-width: 1200px) 384px, 85vw" width="800" height="597" loading="lazy" decoding="async"
+               alt="Mão com anel AnelX preto apagando um abajur à noite." data-i18n-attr="alt:img.depo2">
+          <div class="depo-card__corpo">
+            <span class="tag" data-i18n="benef.sono.tag">Sono</span>
+            <blockquote class="depo-card__citacao"><p data-i18n="depo.placeholder">Espaço reservado para o depoimento real de um cliente. Até 160 caracteres, com nome e cidade autorizados por escrito.</p></blockquote>
+            <div class="autor"><span class="autor__iniciais" aria-hidden="true">NC</span><p><strong data-i18n="depo.nome">Nome do cliente</strong><span data-i18n="depo.cidade">Cidade, UF</span></p></div>
+          </div>
+        </li>
+        <li class="depo-card">
+          <img src="assets/img/depo-atividade-560.webp" srcset="assets/img/depo-atividade-560.webp 560w, assets/img/depo-atividade-800.webp 800w"
+               sizes="(min-width: 1200px) 384px, 85vw" width="800" height="597" loading="lazy" decoding="async"
+               alt="Mãos com anel AnelX prata amarrando o cadarço de um tênis." data-i18n-attr="alt:img.depo3">
+          <div class="depo-card__corpo">
+            <span class="tag" data-i18n="benef.atividade.tag">Atividade</span>
+            <blockquote class="depo-card__citacao"><p data-i18n="depo.placeholder">Espaço reservado para o depoimento real de um cliente. Até 160 caracteres, com nome e cidade autorizados por escrito.</p></blockquote>
+            <div class="autor"><span class="autor__iniciais" aria-hidden="true">NC</span><p><strong data-i18n="depo.nome">Nome do cliente</strong><span data-i18n="depo.cidade">Cidade, UF</span></p></div>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- 9. Ciência (vira "Na mídia" quando houver imprensa real) -->
+    <section class="secao ciencia escuro" id="ciencia" aria-labelledby="ciencia-titulo">
+      <div class="container">
+        <h2 class="eyebrow ciencia__eyebrow" id="ciencia-titulo" data-i18n="ciencia.titulo">Ciência por trás do AnelX</h2>
+        <div class="ciencia__grade">
+          <article class="destaque">
+            <img src="assets/img/midia-destaque-800.webp" srcset="assets/img/midia-destaque-800.webp 800w, assets/img/midia-destaque-1312.webp 1312w"
+                 sizes="(min-width: 1024px) 720px, calc(100vw - 40px)" width="1312" height="816" loading="lazy" decoding="async"
+                 alt="Duas mãos se tocando em luz baixa, uma delas com anel AnelX preto." data-i18n-attr="alt:img.midia">
+            <div class="destaque__conteudo">
+              <span class="tag tag--clara" data-i18n="ciencia.destaque.tag">Em destaque</span>
+              <h3 class="h2 destaque__titulo" data-i18n="ciencia.destaque.titulo">Como o AnelX mede seus batimentos</h3>
+              <a class="btn btn--contorno" href="#ciencia" data-pendente="link do artigo">
+                <span data-i18n="ciencia.destaque.cta">Ler artigo</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </article>
+          <ul class="ciencia__lista" role="list">
+            <li class="card-escuro">
+              <p class="card-escuro__fonte" data-i18n="ciencia.c1.fonte">Guia</p>
+              <h3 class="card-escuro__titulo"><a class="card-escuro__link" href="#ciencia" data-i18n="ciencia.c1.titulo" data-pendente="link do artigo">Por que o dedo é um ótimo lugar para medir o pulso</a></h3>
+              <span class="seta-circulo" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" focusable="false"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </li>
+            <li class="card-escuro">
+              <p class="card-escuro__fonte" data-i18n="ciencia.c2.fonte">Estresse</p>
+              <h3 class="card-escuro__titulo"><a class="card-escuro__link" href="#ciencia" data-i18n="ciencia.c2.titulo" data-pendente="link do artigo">O que a variação dos batimentos revela sobre o seu dia</a></h3>
+              <span class="seta-circulo" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" focusable="false"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </li>
+            <li class="card-escuro">
+              <p class="card-escuro__fonte" data-i18n="ciencia.c3.fonte">Privacidade</p>
+              <h3 class="card-escuro__titulo"><a class="card-escuro__link" href="#ciencia" data-i18n="ciencia.c3.titulo" data-pendente="link do artigo">Seus dados são seus: como cuidamos das suas informações</a></h3>
+              <span class="seta-circulo" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" focusable="false"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 10. Footer -->
+  <footer class="rodape escuro">
+    <div class="container">
+      <div class="rodape__faixa">
+        <figure class="rodape__imagem">
+          <img src="assets/img/footer-1024.webp" srcset="assets/img/footer-1024.webp 1024w, assets/img/footer-1584.webp 1584w"
+               sizes="(min-width: 1280px) 1200px, calc(100vw - 40px)" width="1584" height="672" loading="lazy" decoding="async"
+               alt="Anel AnelX preto sobre pedra escura, com luz quente na borda." data-i18n-attr="alt:img.footer">
+        </figure>
+        <div class="rodape__news">
+          <h2 class="h1" id="news-titulo" data-i18n="news.titulo">Receba novidades do AnelX</h2>
+          <form class="news-form" novalidate aria-labelledby="news-titulo" data-pendente="conectar serviço de newsletter">
+            <label class="sr-only" for="news-email" data-i18n="news.rotulo">Seu e-mail</label>
+            <input id="news-email" name="email" type="email" required autocomplete="email" placeholder="Seu e-mail" data-i18n-attr="placeholder:news.rotulo">
+            <button class="btn btn--primario" type="submit" data-i18n="news.botao">Assinar</button>
+          </form>
+          <p class="news-msg" role="status" aria-live="polite"></p>
+          <p class="legenda rodape__privacidade" data-i18n="news.legenda">Usamos seu e-mail só para mandar novidades. Você sai quando quiser.</p>
+        </div>
+      </div>
+
+      <div class="rodape__colunas">
+        <div>
+          <h3 class="rodape__titulo" data-i18n="rodape.produto">Produto</h3>
+          <ul>
+            <li><a href="#app-sensores" data-i18n="rodape.anel">O anel</a></li>
+            <li><a href="#app" data-i18n="rodape.app">O app</a></li>
+            <li><a href="#manifesto" data-i18n="nav.porque">Por que AnelX</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="rodape__titulo" data-i18n="nav.saude">Sua Saúde</h3>
+          <ul>
+            <li><a href="#beneficios" data-i18n="benef.coracao.tag">Coração</a></li>
+            <li><a href="#beneficios" data-i18n="benef.sono.tag">Sono</a></li>
+            <li><a href="#beneficios" data-i18n="benef.estresse.tag">Estresse</a></li>
+            <li><a href="#beneficios" data-i18n="benef.atividade.tag">Atividade</a></li>
+            <li><a href="#beneficios" data-i18n="benef.recuperacao.tag">Recuperação</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="rodape__titulo">AnelX</h3>
+          <ul>
+            <li><a href="#ciencia" data-i18n="rodape.ciencia">Ciência</a></li>
+            <li><a href="#depoimentos" data-i18n="depo.titulo">Depoimentos</a></li>
+          </ul>
+        </div>
+        <div id="empresas">
+          <h3 class="rodape__titulo" data-i18n="nav.empresas">Empresas</h3>
+          <p class="rodape__texto" data-i18n="rodape.empresas.texto">Planos para equipes e empresas que cuidam da saúde de quem trabalha.</p>
+          <a class="rodape__link-seta" href="#empresas" data-pendente="e-mail ou formulário comercial">
+            <span data-i18n="rodape.empresas.cta">Fale com a gente</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="rodape__base">
+        <span class="logo logo--rodape">AnelX</span>
+        <p data-i18n="rodape.legal">© 2026 AnelX. O AnelX não substitui acompanhamento médico.</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
