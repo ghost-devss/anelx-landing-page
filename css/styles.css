@@ -704,8 +704,17 @@ p { text-wrap: pretty; }
 html.anim { scroll-behavior: auto; }
 /* seção que recebe o foco do link âncora não ganha contorno */
 [tabindex="-1"]:focus { outline: none; }
-/* Hero nasce invisível para entrar suave (evita piscar antes do JS) */
+/* Hero nasce no quadro inicial da entrada (evita piscar antes do JS). O inset do painel é igual ao de js/animacoes.js. */
 .anim .hero__texto > *, .anim .hero__imagem img { opacity: 0; }
+.anim .hero__painel { clip-path: inset(3% 2.5% 3% 2.5% round 32px); }
+/* Título do hero quebrado em palavras: cada uma sobe de dentro de uma máscara.
+   O padding/margem negativa dá folga para acentos e cedilha sem mexer no espaçamento das linhas. */
+.palavra {
+  display: inline-block; vertical-align: top;
+  overflow: clip;
+  padding: .16em .05em .18em; margin: -.16em -.05em -.18em;
+}
+.palavra__int { display: inline-block; will-change: transform; }
 /* O fundo da página escurece sozinho ao chegar aqui (fundo da Ciência vira transparente) */
 .anim .ciencia { background: transparent; }
 .anim .manifesto__imagem { will-change: clip-path; }

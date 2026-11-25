@@ -11,6 +11,7 @@
   const CREME = '#F4EEE4';
   const CARVAO = '#191714';
   const SUAVE = 'power3.out';
+  const PAINEL_INICIO = 'inset(3% 2.5% 3% 2.5% round 32px)'; // quadro inicial do hero; igual ao CSS (.anim .hero__painel)
   const $ = (sel, raiz = document) => raiz.querySelector(sel);
   const $$ = (sel, raiz = document) => [...raiz.querySelectorAll(sel)];
 
@@ -29,6 +30,8 @@
     } catch (erro) {
       console.error('[AnelX] animações desligadas:', erro);
       doc.classList.remove('anim');
+      limpar.forEach(f => f());
+      limpar = [];
       mm.revert();
     }
     document.addEventListener('click', ancoraSuave);
@@ -40,17 +43,119 @@
     };
   });
 
-  /* ---------- Hero: entrada ao carregar + saída suave ao rolar ---------- */
-  function hero() {
-    const texto = $$('.hero__texto > *');
-    const foto = $('.hero__imagem img');
-    gsap.timeline({ defaults: { ease: SUAVE } })
-      .fromTo(foto, { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 1.8, ease: 'power2.out' }, 0)
-      .fromTo(texto, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1.1, stagger: 0.1 }, 0.15);
+  /* ---------- Hero: entrada cinematográfica ----------
+     1. o painel pêssego se abre  2. tag  3. título palavra a palavra, saindo de uma máscara
+     4. subtítulo e CTA em sequência  5. a foto se revela por uma janela que cresce da base
+     6. depois, a foto "respira" e segue o mouse de leve  7. na rolagem, cada camada sai num ritmo */
 
-    const rolagem = { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true };
-    gsap.to('.hero__texto', { y: -60, opacity: 0.25, ease: 'none', scrollTrigger: rolagem });
-    gsap.to('.hero__imagem', { yPercent: 8, ease: 'none', scrollTrigger: { ...rolagem } });
+  // Quebra o título em palavras com máscara. O i18n reescreve o innerHTML, então isso é refeito a cada troca.
+  function dividirPalavras(el) {
+    const texto = el.textContent.trim().replace(/\s+/g, ' ');
+    el.setAttribute('aria-label', texto);
+    el.replaceChildren(...texto.split(' ').flatMap((palavra, i) => {
+      const fora = document.createElement('span');
+      const dentro = document.createElement('span');
+      fora.className = 'palavra';
+      fora.setAttribute('aria-hidden', 'true');
+      dentro.className = 'palavra__int';
+      dentro.textContent = palavra;
+      fora.append(dentro);
+      return i ? [' ', fora] : [fora];
+    }));
+    return $$('.palavra__int', el);
+  }
+
+  // Espera a foto decodificar, mas nunca mais que `limite` ms (não segura a primeira dobra).
+  function fotoPronta(img, limite) {
+    const pronta = img.complete && img.naturalWidth ? Promise.resolve() : (img.decode?.() ?? Promise.resolve());
+    return Promise.race([pronta.catch(() => {}), new Promise(r => setTimeout(r, limite))]);
+  }
+
+  function hero() {
+    const painel = $('.hero__painel');
+    if (!painel) return;
+    const texto = $('.hero__texto');
+    const badge = $('.tag', texto);
+    const titulo = $('.hero__titulo');
+    const sub = $('.hero__sub');
+    const cta = $('.hero__cta');
+    const foto = $('.hero__imagem');
+    const img = $('img', foto);
+    let vivo = true;
+    let respirar = null;
+    let fotoTl = null;
+    let tirarMouse = null;
+    // Troca de idioma: o i18n devolve o título como texto puro; divide de novo, já visível.
+    const aoTrocar = () => dividirPalavras(titulo);
+    document.addEventListener('anelx:idioma', aoTrocar);
+
+    limpar.push(() => {
+      vivo = false;
+      document.removeEventListener('anelx:idioma', aoTrocar);
+      tirarMouse?.();
+      fotoTl?.kill();
+      respirar?.kill();
+      gsap.set([img, foto], { clearProps: 'all' });
+      if (titulo.hasAttribute('aria-label')) titulo.textContent = titulo.getAttribute('aria-label');
+      titulo.removeAttribute('aria-label');
+    });
+
+    /* Texto e painel: começam na hora, sem esperar a imagem */
+    const palavras = dividirPalavras(titulo);
+    gsap.set(titulo, { opacity: 1 });
+    gsap.timeline({ defaults: { ease: 'expo.out' } })
+      .fromTo(painel, { clipPath: PAINEL_INICIO }, { clipPath: 'inset(0% 0% 0% 0% round 20px)', duration: 1.8, ease: 'expo.inOut' }, 0)
+      .fromTo(badge, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 1 }, 0.25)
+      .fromTo(palavras, { yPercent: 115, rotation: 2 }, { yPercent: 0, rotation: 0, duration: 1.4, stagger: 0.07 }, 0.35)
+      .fromTo(sub, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 1.2 }, '-=1.0')
+      .fromTo(cta, { opacity: 0, y: 18, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 1.2 }, '-=1.0');
+
+    /* Foto: janela que cresce a partir da base + escala que assenta */
+    // (clip-path com fromTo e as duas strings no mesmo formato: o navegador encurta "inset(a b c b)"
+    //  para 3 valores e o GSAP interpolaria os números fora de ordem)
+    gsap.set(img, { opacity: 0, scale: 1.22, yPercent: 6, transformOrigin: '50% 60%' });
+    fotoPronta(img, 800).then(() => {
+      if (!vivo) return;
+      fotoTl = gsap.timeline({ delay: 0.15, onComplete: iniciarRespiro })
+        .fromTo(foto, { clipPath: 'inset(34% 20% 0% 20% round 28px)' },
+          { clipPath: 'inset(0% 0% 0% 0% round 0px)', duration: 2, ease: 'expo.inOut' }, 0)
+        .to(img, { opacity: 1, duration: 0.9, ease: 'power2.out' }, 0)
+        .to(img, { scale: 1, yPercent: 0, duration: 2.6, ease: 'expo.out' }, 0.2);
+    });
+
+    /* Movimento contínuo: respiro lentíssimo, pausado fora da tela */
+    let heroVisivel = true;
+    function iniciarRespiro() {
+      if (!vivo) return;
+      respirar = gsap.to(img, { scale: 1.04, duration: 10, ease: 'sine.inOut', yoyo: true, repeat: -1, paused: !heroVisivel });
+    }
+    ScrollTrigger.create({
+      trigger: '.hero', start: 'top bottom', end: 'bottom top',
+      onToggle: s => { heroVisivel = s.isActive; respirar?.[s.isActive ? 'play' : 'pause'](); },
+    });
+
+    /* Profundidade com o mouse (só desktop com mouse de verdade) */
+    if (matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1024px)').matches) {
+      const fotoX = gsap.quickTo(img, 'x', { duration: 1.6, ease: 'power3.out' });
+      const fotoY = gsap.quickTo(img, 'y', { duration: 1.6, ease: 'power3.out' });
+      const textoX = gsap.quickTo(texto, 'x', { duration: 1.8, ease: 'power3.out' });
+      const mover = e => {
+        const r = painel.getBoundingClientRect();
+        const nx = (e.clientX - r.left) / r.width - 0.5;   // -0,5 … 0,5
+        const ny = (e.clientY - r.top) / r.height - 0.5;
+        fotoX(nx * -18); fotoY(ny * -10); textoX(nx * 6);
+      };
+      const soltar = () => { fotoX(0); fotoY(0); textoX(0); };
+      painel.addEventListener('pointermove', mover);
+      painel.addEventListener('pointerleave', soltar);
+      tirarMouse = () => { painel.removeEventListener('pointermove', mover); painel.removeEventListener('pointerleave', soltar); };
+    }
+
+    /* Saída na rolagem: texto sai rápido, foto fica para trás (parallax), painel recua */
+    const sair = { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.6 };
+    gsap.to(texto, { y: -90, opacity: 0, ease: 'none', scrollTrigger: { ...sair, end: '55% top' } });
+    gsap.to(foto, { yPercent: 14, ease: 'none', scrollTrigger: { ...sair } });
+    gsap.to(painel, { scale: 0.95, transformOrigin: '50% 0%', ease: 'none', scrollTrigger: { ...sair } });
   }
 
   /* ---------- Revelar ao entrar na tela (uma vez) ---------- */

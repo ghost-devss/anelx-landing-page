@@ -4,6 +4,22 @@ Diário de decisões e aprendizados. Entrada nova no topo. Decisão de design vi
 
 ---
 
+## 2026-11-24 — Entrada cinematográfica do hero
+
+- Pedido: primeira dobra mais impactante, no nível Oura/Apple. Sequência (em `hero()` de `js/animacoes.js`):
+  1. painel pêssego nasce recolhido (`clip-path` inset 3% / cantos 32px) e se abre até o quadro final;
+  2. tag → título **palavra a palavra** saindo de máscara → subtítulo → CTA;
+  3. foto: janela recortada que cresce a partir da base + escala 1,22 → 1. Espera a imagem decodificar, no máx. 0,8 s;
+  4. depois: foto "respira" (escala 1 → 1,04 em 10 s, ida e volta, pausada fora da tela) e segue o mouse em poucos px (só desktop com mouse);
+  5. rolagem: texto sobe e some, foto fica para trás (parallax), painel recua para 0,95.
+- Nenhum elemento novo no hero (indicador de "role" não está no `specs/design.md` §4).
+
+### Aprendizados
+- Título dividido em palavras **precisa ser refeito** a cada `anelx:idioma` (o i18n reescreve o `innerHTML`). O `h1` leva `aria-label` com a frase inteira e as palavras ficam `aria-hidden`.
+- Máscara das palavras: `overflow: clip` + padding/margem negativa de ~.16em para não cortar til e cedilha.
+- **`clip-path` no GSAP:** o navegador encurta `inset(34% 20% 0% 20%)` para 3 valores; num `.to()` o GSAP lê esse valor encurtado e interpola os números fora de ordem. Usar sempre `fromTo` com as duas strings no mesmo formato.
+- Constante usada dentro do `mm.add(...)` tem de estar declarada **antes** dele (o callback roda na hora; deu erro de TDZ). O fallback funcionou: a página apareceu sem animação.
+
 ## 2026-11-24 — Animações
 
 - **Lib aprovada:** GSAP 3.13 + ScrollTrigger, **arquivos locais** em `js/vendor/` (sem npm, sem build, sem CDN — mesmo motivo das fontes). Lenis descartado: brigaria com os carrosséis em scroll-snap, os âncoras e a acessibilidade.
