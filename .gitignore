@@ -30,3 +30,6 @@ $RECYCLE.BIN/
 
 # Dependências (o projeto não usa npm; evita subir por acidente)
 node_modules/
+
+# Referência visual de terceiros (print do site da Oura): só local, não vai para o repositório público
+refererencia - site/
