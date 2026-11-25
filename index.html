@@ -30,10 +30,18 @@
         if (l === 'en') { d.classList.add('i18n-pendente'); setTimeout(function () { d.classList.remove('i18n-pendente'); }, 1500); }
         if (localStorage.getItem('anelx-aviso') === '1') d.classList.add('aviso-fechado');
       } catch (e) {}
+      /* Animações: o hero já nasce escondido para entrar suave. Se o GSAP não chegar em 3 s, mostra tudo. */
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        d.classList.add('anim');
+        setTimeout(function () { if (!window.gsap) d.classList.remove('anim'); }, 3000);
+      }
     })(document.documentElement);
   </script>
   <script src="js/i18n.js" defer></script>
   <script src="js/main.js" defer></script>
+  <script src="js/vendor/gsap.min.js" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="js/animacoes.js" defer></script>
 </head>
 <body>
   <a class="pular" href="#conteudo" data-i18n="pular">Pular para o conteúdo</a>

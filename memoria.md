@@ -4,6 +4,20 @@ Diário de decisões e aprendizados. Entrada nova no topo. Decisão de design vi
 
 ---
 
+## 2026-11-24 — Animações
+
+- **Lib aprovada:** GSAP 3.13 + ScrollTrigger, **arquivos locais** em `js/vendor/` (sem npm, sem build, sem CDN — mesmo motivo das fontes). Lenis descartado: brigaria com os carrosséis em scroll-snap, os âncoras e a acessibilidade.
+- Tudo em `js/animacoes.js`, dentro de `gsap.matchMedia('(prefers-reduced-motion: no-preference)')`: com "reduzir movimento" nada roda, e se a preferência mudar com a página aberta tudo é desfeito.
+- Base discreta (tom calmo do `specs/design.md`): hero entra ao carregar e sobe de leve ao rolar; textos, cards e fotos aparecem ao entrar na tela; parallax leve dentro das molduras de foto; zoom de 4% no hover dos cards.
+- Momentos-assinatura escolhidos: **manifesto** (faixa nasce estreita e se abre com zoom), **contador "100 mil"** (PT e EN), **leque do app** (telas empilhadas se abrem com a rolagem; gráficos, scores e barras animam), **fundo creme → carvão** ao chegar na Ciência.
+- Classe `.anim` no `<html>` (posta no `<head>`): esconde o hero antes do JS para não piscar. Se o GSAP não carregar em 3 s, sai.
+
+### Aprendizados
+- **`scroll-behavior: smooth` quebra o ScrollTrigger:** ao recalcular, ele pula a rolagem para 0 e mede; com smooth o pulo vira animação e todas as posições saem deslocadas pelo `scrollY` (aparece ao recarregar no meio da página). Ouvir `refreshInit` não resolve (dispara tarde). Solução: com `.anim`, `scroll-behavior: auto` no CSS e rolagem suave dos âncoras em JS (`scrollIntoView`).
+- O i18n troca o `innerHTML` dos elementos com `data-i18n`: animação que mexe no texto (contador) precisa guardar o texto real antes de zerar e ouvir `anelx:idioma`. Por isso não há divisão de títulos em linhas/palavras.
+- Enquanto o contador está em 0, o título leva `aria-label` com o número real (leitor de tela não ouve "0 mil").
+- Âncoras somam `scroll-padding-top` do `html` + `scroll-margin-top` da `.secao` (144px no desktop). Já era assim antes das animações.
+
 ## 2026-11-24 — Site construído
 
 - Decisões D1–D11 do plano aprovadas ("corrija o que precisa e CRIE") e levadas ao `specs/design.md`.

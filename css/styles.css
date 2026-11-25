@@ -396,7 +396,7 @@ p { text-wrap: pretty; }
    6. Prova numérica
    ========================================================= */
 .prova { background: var(--creme-areia); }
-.prova__titulo { max-width: 880px; margin-inline: auto; font-variant-numeric: lining-nums; }
+.prova__titulo { max-width: 880px; margin-inline: auto; font-variant-numeric: lining-nums tabular-nums; }
 .prova__titulo sup { font-family: var(--sans); font-size: .28em; font-weight: 400; line-height: 0; vertical-align: top; position: relative; top: .5em; margin-left: .15em; letter-spacing: 0; }
 .prova__sub { max-width: 640px; margin: 20px auto 0; }
 .prova__cta { margin-top: 32px; }
@@ -412,6 +412,7 @@ p { text-wrap: pretty; }
 
 .leque {
   --k: .8;
+  position: relative; /* referência de medida do leque animado (js/animacoes.js) */
   display: flex; justify-content: center; align-items: center;
   margin-top: 64px; padding-block: 8px;
   overflow: clip;
@@ -692,4 +693,25 @@ p { text-wrap: pretty; }
   .rodape__imagem { aspect-ratio: 21 / 9; }
   .rodape__news { position: absolute; left: 56px; top: 50%; transform: translateY(-50%); margin-top: 0; max-width: 560px; }
   .rodape__colunas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+/* =========================================================
+   Movimento (js/animacoes.js)
+   A classe .anim só existe com "reduzir movimento" desligado e o GSAP carregado.
+   ========================================================= */
+/* O ScrollTrigger mede a página pulando a rolagem; com scroll-behavior: smooth as medidas saem erradas.
+   Com animações ligadas, a rolagem suave dos links âncora é feita em JS (js/animacoes.js). */
+html.anim { scroll-behavior: auto; }
+/* seção que recebe o foco do link âncora não ganha contorno */
+[tabindex="-1"]:focus { outline: none; }
+/* Hero nasce invisível para entrar suave (evita piscar antes do JS) */
+.anim .hero__texto > *, .anim .hero__imagem img { opacity: 0; }
+/* O fundo da página escurece sozinho ao chegar aqui (fundo da Ciência vira transparente) */
+.anim .ciencia { background: transparent; }
+.anim .manifesto__imagem { will-change: clip-path; }
+
+/* Foto do card de benefício aproxima de leve no hover */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card-beneficio > img, .destaque > img { transition: scale .9s cubic-bezier(.2, .7, .2, 1); }
+  .card-beneficio:hover > img, .destaque:hover > img { scale: 1.04; }
 }
