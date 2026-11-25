@@ -309,6 +309,8 @@
   /* ---------- Fundo: creme vira carvão ao chegar na Ciência ---------- */
   function fundoEscuro() {
     if (!$('.ciencia')) return;
+    // A seção de depoimentos tem fundo creme próprio (CSS), então o escurecimento só aparece na área da Ciência
+    // e o texto solto acima dela (nota dos depoimentos) nunca fica sobre um fundo intermediário.
     gsap.fromTo(document.body, { backgroundColor: CREME }, {
       backgroundColor: CARVAO, ease: 'none',
       scrollTrigger: { trigger: '.ciencia', start: 'top 90%', end: 'top 40%', scrub: true },

@@ -4,6 +4,16 @@ Diário de decisões e aprendizados. Entrada nova no topo. Decisão de design vi
 
 ---
 
+## 2026-11-25 — Página única de verdade + depoimentos ilustrativos
+
+- **Saídas falsas removidas:** "Ler artigo ↗", os 3 cards da Ciência (links ↗ para artigos inexistentes) e "Fale com a gente ↗" em Empresas. A Ciência agora traz o conteúdo na própria página (um parágrafo por card, sem seta). Empresas diz "Em breve".
+- Todos os links do site são âncoras internas. Único `href="#"`: o carrinho, oculto até existir loja (spec §4.2).
+- **Depoimentos:** 3 textos genéricos (Mariana S./Curitiba, Rafael M./Recife, Lúcia F./Belo Horizonte), coerentes com as fotos e sem promessa de diagnóstico, **com nota visível "Depoimentos ilustrativos"**. Depoimento inventado apresentado como real é publicidade enganosa (CDC art. 37; CONAR). A nota sai junto quando entrarem relatos reais.
+- Texto de privacidade da Ciência cita só direitos da LGPD; marcado `data-pendente` para validar com a política real.
+
+### Aprendizados
+- Mudar a cor de um texto junto com o fundo não salva o contraste: no meio da transição os dois são cinza (deu 1,16:1). Solução: a seção de depoimentos tem fundo creme próprio, que se dissolve só no respiro abaixo da nota.
+
 ## 2026-11-24 — Entrada cinematográfica do hero
 
 - Pedido: primeira dobra mais impactante, no nível Oura/Apple. Sequência (em `hero()` de `js/animacoes.js`):
